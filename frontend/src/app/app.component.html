@@ -1,5 +1,12 @@
-<div class="content" role="main">
-<div class="content" role="main">
-  <h1>Musikarchiv</h1>
-  <div>Hello. :)</div>
+<mat-toolbar color="primary">
+  <span>Musikarchiv</span>
+</mat-toolbar>
+<div class="content">
+
+  <div class="gallery">
+    <div class="album" *ngFor="let a of albums" (click)="showAlbum(a)">
+        <img mat-card-image src={{a.art}}>
+    </div>
+  </div>
+
 </div>
