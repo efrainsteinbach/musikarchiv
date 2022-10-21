@@ -12,10 +12,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { LayoutModule } from '@angular/cdk/layout';
+import { PlayerComponent } from './player/player.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
+    PlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,6 +26,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatCardModule,
     MatToolbarModule,
     MatButtonModule,
+    MatDialogModule,
     FlexLayoutModule,
     MatGridListModule,
     MatMenuModule,

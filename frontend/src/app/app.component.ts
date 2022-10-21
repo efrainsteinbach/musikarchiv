@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Album } from './app.interfaces';
+import { PlayerComponent } from './player/player.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +9,10 @@ import { Album } from './app.interfaces';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'musikarchiv';
+  constructor(public dialog: MatDialog) { }
 
   showAlbum(album: Album) {
-    // TODO: Bring up new view
-    alert("This has " + album.tracks.length + " tracks.");
+    const dialogRef = this.dialog.open(PlayerComponent, { data: album });
   }
 
   albums: Album[] = [
@@ -41,8 +42,8 @@ export class AppComponent {
     {
       title: "Elias II - The Comeback",
       artist: "Akademischer Chor, Anna Jelmorini",
-      year: 2013,
-      art: "./../assets/cover.png",
+      year: 2015,
+      art: "./../assets/cover2.png",
       tracks: [
         {
           title: "Einleitung \"So wahr der Herr...\" - Ouvertüre",
@@ -56,7 +57,12 @@ export class AppComponent {
         }
       ]
     }
-  ]
+  ];
+
+  
+  ngAfterViewInit(): void {
+    this.showAlbum(this.albums[0]);
+  }
 }
 
 

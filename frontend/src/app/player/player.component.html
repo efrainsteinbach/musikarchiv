@@ -1,0 +1,6 @@
+<img class="cover-art" src={{album.art}}>
+<p>{{album.title}} ({{album.year}})</p>
+<p>{{album.artist}}</p>
+<div *ngFor="let track of album.tracks; index as i">
+    {{i+1}}) {{track.title}}
+</div>
