@@ -55,5 +55,28 @@ export class PlayerComponent implements AfterViewInit {
     } else {
       this.playSong(this.indexOfSongPlaying);
     }
-  }    
+  }
+
+  onPreviousClicked() {
+    if (this.audioElement.currentTime > 3) {
+      // just rewind to beginning of current song time is after 3s
+      this.audioElement.currentTime = 0;
+    } else {
+      const songPlaying = this.indexOfSongPlaying;
+      const songToPlay = songPlaying > 0 ? songPlaying - 1 : 0;
+      if (this.isPlaying)
+        this.playSong(songToPlay);
+      else
+        this.indexOfSongPlaying = songToPlay;
+    }
+  }
+
+  onNextClicked() {
+    const songPlaying = this.indexOfSongPlaying;
+    const songToPlay = songPlaying === this.album.tracks.length - 1 ? songPlaying : songPlaying + 1;
+    if (this.isPlaying)
+      this.playSong(songToPlay);
+    else
+      this.indexOfSongPlaying = songToPlay;
+  }
 }

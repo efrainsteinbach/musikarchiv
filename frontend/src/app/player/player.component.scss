@@ -5,6 +5,10 @@
 
 .track {
     cursor: pointer;
+
+    &.current-song {
+        color: grey;
+    }
 }
 
 .clickable {
@@ -22,6 +26,7 @@
 .player-controls {
     display: flex;
     justify-content: center;
+    align-items: center;
 
     .pauseplay {
         font-size: 5em;
