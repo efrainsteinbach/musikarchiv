@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Album } from './app.interfaces';
-import { PlayerComponent } from './player/player.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PlayerComponent } from './player/player.component';
 
 @Component({
   selector: 'app-root',
