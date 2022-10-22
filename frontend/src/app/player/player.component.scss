@@ -6,3 +6,24 @@
 .track {
     cursor: pointer;
 }
+
+.clickable {
+    cursor: pointer;
+    &:hover {
+        color: lightgrey;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+
+    .pauseplay {
+        font-size: 5em;
+    }
+}
