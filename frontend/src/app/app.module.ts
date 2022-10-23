@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { LayoutModule } from '@angular/cdk/layout';
 import { PlayerComponent } from './player/player.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 @NgModule({
   declarations: [
@@ -27,11 +29,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatToolbarModule,
     MatButtonModule,
     MatDialogModule,
+    NgxSliderModule,
     FlexLayoutModule,
     MatGridListModule,
     MatMenuModule,
     MatIconModule,
     LayoutModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

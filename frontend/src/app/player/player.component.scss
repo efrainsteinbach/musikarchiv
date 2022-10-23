@@ -13,6 +13,7 @@
 
 .clickable {
     cursor: pointer;
+
     &:hover {
         color: lightgrey;
     }
@@ -23,7 +24,46 @@
     flex-direction: column;
 }
 
-.player-controls {
+
+::ng-deep {
+    .player-time-slider .ngx-slider {
+        .ngx-slider-bar {
+            background: #ccc;
+            height: 8px;     
+            border-radius: 0px;
+            cursor: pointer;
+        }
+        .ngx-slider-selection {
+            background: #eee;
+            visibility: visible;
+            box-sizing: border-box;
+            border-radius: 0px;
+            cursor: pointer;
+        }
+        .ngx-slider-pointer {
+            width: 8px;
+            height: 8px;
+            border-radius: 0px;
+            top: auto;
+            background-color: #eee;
+        }
+        .ngx-slider-pointer:after {
+            display: none;
+        }
+    }
+}
+
+.player-time-slider {
+    overflow: hidden;
+
+    .time-numbers {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.player-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
