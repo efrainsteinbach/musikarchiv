@@ -68,7 +68,34 @@
     justify-content: center;
     align-items: center;
 
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+
     .pauseplay {
         font-size: 5em;
+    }
+
+    .previous-next-song {
+        font-size: 2em;
+    }
+
+    .mode-enabled {
+        color: rgb(68, 118, 255);
+
+        &:hover {
+            color: rgb(110, 149, 255);
+        }
+    }
+
+    .shuffle-mode {
+        margin-right: 20px;
+        font-size: 1.6em;
+    }
+    .repeat-mode {
+        margin-left: 20px;
+        font-size: 1.6em;
     }
 }

@@ -29,10 +29,16 @@ export class PlayerComponent implements AfterViewInit {
     keyboardSupport: false,
   };
 
+  shuffleEnabled: boolean = false;
+  shuffledTrackIndices: number[];
+  repeatMode: RepeatMode = RepeatMode.DontRepeat;
+
+  readonly RepeatMode = RepeatMode; // Expose enum to template
   audioElement!: HTMLAudioElement;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Album) {
     this.album = data;
+    this.shuffledTrackIndices = [...Array(this.album.tracks?.length ?? 1).keys()];
   }
 
   @ViewChild('audio') audioRef!: ElementRef<HTMLAudioElement>;
@@ -74,23 +80,52 @@ export class PlayerComponent implements AfterViewInit {
     }
   }
 
-  playSong(index: number) {
+  loadNewSong(index: number, startPlayback: boolean) {
     console.log(`starting playback of song #${index + 1}`);
     const track = this.album.tracks[index];
     this.audioElement.src = track.url;
     this.audioElement.load();
-    this.audioElement.play();
     this.indexOfSongPlaying = index;
-    this.isPlaying = true;
-  }
 
-  onSongEnded() {
-    console.log(`song #${this.indexOfSongPlaying} ended`);
-    if (this.indexOfSongPlaying < this.album.tracks.length - 1 && this.indexOfSongPlaying >= 0) {
-      this.playSong(this.indexOfSongPlaying + 1);
+    if (startPlayback) {
+      this.audioElement.play();
+      this.isPlaying = true;
     } else {
       this.isPlaying = false;
     }
+  }
+
+  onSongEnded() {
+    console.log(`song #${this.indexOfSongPlaying + 1} ended`);
+    if (this.repeatMode === RepeatMode.RepeatOne) {
+      this.audioElement.currentTime = 0;
+      this.audioElement.play();
+    }
+    else {
+      this.onNextClicked();
+    }
+  }
+
+  onNextClicked() {
+    const nextSongIndex = this.getIndexOfNextSong();
+    if (nextSongIndex === 0 && this.repeatMode === RepeatMode.DontRepeat) {
+      this.loadNewSong(0, false); // load first song and stop playback
+    }
+    else {
+      this.loadNewSong(nextSongIndex, true);
+    }
+  }
+
+  getIndexOfNextSong(): number {
+    let nextSongIndex = this.indexOfSongPlaying + 1;
+    if (this.indexOfSongPlaying >= this.album.tracks.length - 1)
+      nextSongIndex = 0;
+
+    if (this.shuffleEnabled) {
+      nextSongIndex = this.shuffledTrackIndices[nextSongIndex];
+    }
+    console.log(`next song is #${nextSongIndex + 1}`);
+    return nextSongIndex;
   }
 
   onPlayPauseClicked() {
@@ -98,7 +133,13 @@ export class PlayerComponent implements AfterViewInit {
       this.audioElement.pause();
       this.isPlaying = false;
     } else {
-      this.playSong(this.indexOfSongPlaying);
+      if (this.audioElement.currentTime > 0) {
+        this.audioElement.play();
+        this.isPlaying = true;
+      }
+      else {
+        this.loadNewSong(this.indexOfSongPlaying, true);
+      }
     }
   }
 
@@ -110,19 +151,10 @@ export class PlayerComponent implements AfterViewInit {
       const songPlaying = this.indexOfSongPlaying;
       const songToPlay = songPlaying > 0 ? songPlaying - 1 : 0;
       if (this.isPlaying)
-        this.playSong(songToPlay);
+        this.loadNewSong(songToPlay, true);
       else
         this.indexOfSongPlaying = songToPlay;
     }
-  }
-
-  onNextClicked() {
-    const songPlaying = this.indexOfSongPlaying;
-    const songToPlay = songPlaying === this.album.tracks.length - 1 ? songPlaying : songPlaying + 1;
-    if (this.isPlaying)
-      this.playSong(songToPlay);
-    else
-      this.indexOfSongPlaying = songToPlay;
   }
 
   onSliderDragStart() {
@@ -138,6 +170,44 @@ export class PlayerComponent implements AfterViewInit {
     this.sliderDragging = false;
     this.sliderPosition = event.value;
 
-    this.audioElement.currentTime = this.audioElement.duration * this.sliderPosition;
+    if (isFinite(this.audioElement.duration)) {
+      this.audioElement.currentTime = this.audioElement.duration * this.sliderPosition;
+    }
   }
+
+  onShuffleClicked() {
+    this.shuffleEnabled = !this.shuffleEnabled;
+    const trackCount = this.album.tracks.length;
+    const indexLookup = [...Array(trackCount).keys()]; // [1, 2, 3.. N]
+    if (this.shuffleEnabled) {
+      for (let i = indexLookup.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indexLookup[i], indexLookup[j]] = [indexLookup[j], indexLookup[i]];
+      }    
+    }
+    this.shuffledTrackIndices = indexLookup;
+  }
+
+  _shuffleArray(array: number[]) {
+    
+  }
+
+  onRepeatClicked() {
+    switch (this.repeatMode) {
+      case RepeatMode.DontRepeat:
+        this.repeatMode = RepeatMode.RepeatAll;
+        break;
+      case RepeatMode.RepeatAll:
+          this.repeatMode = RepeatMode.RepeatOne;
+          break;
+      default:
+        this.repeatMode = RepeatMode.DontRepeat;
+    }
+  }
+}
+
+enum RepeatMode {
+  DontRepeat = 0,
+  RepeatAll,
+  RepeatOne
 }

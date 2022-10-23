@@ -4,9 +4,9 @@
     <p>{{album.artist}}</p>
     <div *ngFor="let track of album.tracks; index as i">
         <div class="track clickable" 
-            (click)="playSong(i)" 
+            (click)="loadNewSong(i, true)" 
             [ngClass]="{'current-song' : indexOfSongPlaying === i}">
-            {{i+1}}) {{track.title}}
+            {{i+1}} {{track.title}}
         </div>
     </div>
 
@@ -27,14 +27,11 @@
     <div class="player-buttons">
         <audio #audio preload></audio>
 
-        <!-- <source #source type="audio/ogg"> -->
-        <!--
-    <div class="simp-controls flex-wrap flex-align">
-    <div class="simp-plauseward flex flex-align"><button type="button" class="simp-prev fa fa-backward" disabled></button><button type="button" class="simp-plause fa fa-play" disabled></button><button type="button" class="simp-next fa fa-forward" disabled></button></div>
-    <div class="simp-tracker simp-load"><input class="simp-progress" type="range" min="0" max="100" value="0" disabled/><div class="simp-buffer"></div></div>
-    <div class="simp-time flex flex-align"><span class="start-time">00:00</span><span class="simp-slash">&#160;/&#160;</span><span class="end-time">00:00</span></div>
-    <div class="simp-volume flex flex-align"><button type="button" class="simp-mute fa fa-volume-up"></button><input class="simp-v-slider" type="range" min="0" max="100" value="100"/></div>
-    <div class="simp-others flex flex-align"><button type="button" class="simp-plext fa fa-play-circle" title="Auto Play"></button><button type="button" class="simp-random fa fa-random" title="Random"></button><div class="simp-shide"><button type="button" class="simp-shide-top fa fa-caret-up" title="Show/Hide Album"></button><button type="button" class="simp-shide-bottom fa fa-caret-down" title="Show/Hide Playlist"></button></div></div></div> -->
+        <div class="clickable" (click)="onShuffleClicked()">
+            <span class="material-icons shuffle-mode" [ngClass]="{'mode-enabled': shuffleEnabled}">
+                shuffle
+            </span>
+        </div>
 
         <div class="clickable" (click)="onPreviousClicked()">
             <span class="material-icons previous-next-song">skip_previous</span>
@@ -48,6 +45,12 @@
 
         <div class="clickable" (click)="onNextClicked()">
             <span class="material-icons previous-next-song">skip_next</span>
+        </div>
+
+        <div class="clickable" (click)="onRepeatClicked()">
+            <span class="material-icons repeat-mode" [ngClass]="{'mode-enabled': repeatMode != RepeatMode.DontRepeat}">
+                {{ repeatMode === RepeatMode.RepeatOne ? 'repeat_one' : 'repeat' }}
+            </span>
         </div>
 
     </div>
