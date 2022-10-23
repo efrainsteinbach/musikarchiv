@@ -1,0 +1,17 @@
+{
+  "name": "musikarchiv-backend",
+  "version": "1.0.0",
+  "description": "A service watching the filesystem for audio files, exposing an endpoint that returns them as JSON.",
+  "main": "server-app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server-app.js"
+  },
+  "author": "efrainsteinbach",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "glob": "^8.0.3",
+    "music-metadata": "^8.1.0"
+  }
+}
