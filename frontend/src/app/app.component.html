@@ -3,10 +3,13 @@
 </mat-toolbar>
 <div class="content">
 
-  <div class="gallery">
+  <div *ngIf="dataReady" class="gallery">
     <div class="album" *ngFor="let a of albums" (click)="showAlbum(a)">
         <img mat-card-image src={{a.art}}>
     </div>
+  </div>
+  <div *ngIf="!dataReady">
+    <mat-spinner></mat-spinner>
   </div>
 
 </div>

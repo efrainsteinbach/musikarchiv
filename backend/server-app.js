@@ -1,6 +1,9 @@
 import glob from 'glob';
 import { parseFile } from 'music-metadata';
 import express from 'express';
+import cors from 'cors';
+
+const hostname = 'http://localhost:3000';
 
 async function extractMetadata(pathToFile) {
     const metadata = await parseFile(pathToFile);
@@ -23,11 +26,11 @@ async function extractAlbums(tracks) {
             title: representative?.album ? representative?.album : albumFolder,
             artist: representative?.artist,
             year: representative?.year,
-            art: "./music/" + albumFolder + "/cover.png",
+            art: hostname + "/music/" + albumFolder + "/cover.png",
             tracks: albumTracks.map(t => ({
                 title: t.title,
                 artist: t.artist,
-                url: t.url,
+                url: hostname + "/" + t.url,
             })),
         };
     });
@@ -54,12 +57,12 @@ function startServer(trackListing) {
     const port = 3000;
     const tracks = trackListing;
 
-    app.get('/albums', (req, res) => {
+    app.use(cors());
+    app.get('/index.json', (req, res) => {
         res.json(tracks)
     })
 
     app.use('/music', express.static('music'));
-
     app.listen(port, () => {
         console.log(`Serving album-json on port ${port}`);
     })

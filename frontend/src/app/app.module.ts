@@ -14,8 +14,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { LayoutModule } from '@angular/cdk/layout';
 import { PlayerComponent } from './player/player.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,11 +33,13 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     MatDialogModule,
     NgxSliderModule,
     FlexLayoutModule,
+    MatProgressSpinnerModule,
     MatGridListModule,
     MatMenuModule,
     MatIconModule,
     LayoutModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
