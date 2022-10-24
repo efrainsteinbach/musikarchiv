@@ -1,7 +1,7 @@
 <div class="container">
     <img class="cover-art" src={{album.art}}>
     <p>{{album.title}} <span *ngIf="album.year">({{album.year}})</span></p>
-    <p>{{album.artist}}</p>
+    <p *ngIf="album.artist">{{album.artist}}</p>
     <div *ngFor="let track of album.tracks; index as i">
         <div class="track clickable" 
             (click)="loadNewSong(i, true)" 

@@ -25,8 +25,6 @@ export class AppComponent {
         this.albums = data;
         this.dataReady = true;
       });
-
-    // this.showAlbum(this.albums[0]);
   }
 }
 
