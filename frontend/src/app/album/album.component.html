@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="header">
+        <img class="cover-art" src={{album.art}}>
+        <div class="clickable" (click)="playSong(0)">
+            <span class="material-icons play-album-button">play_circle</span>
+        </div>
+    </div>
+    <p>{{album.title}} <span *ngIf="album.year">({{album.year}})</span></p>
+    <p *ngIf="album.artist">{{album.artist}}</p>
+    <div *ngFor="let track of album.tracks; index as i">
+        <div class="track clickable" 
+            (click)="playSong(i)" 
+            [ngClass]="{'current-song' : indexOfSongPlaying === i}">
+            {{i+1}} {{track.title}}
+        </div>
+    </div>
+</div>

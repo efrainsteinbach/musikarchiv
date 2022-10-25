@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Album } from './app.interfaces';
 import { MatDialog } from '@angular/material/dialog';
-import { PlayerComponent } from './player/player.component';
 import { HttpClient } from '@angular/common/http';
+import { AlbumComponent } from './album/album.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(public dialog: MatDialog, private http: HttpClient) { }
 
   showAlbum(album: Album) {
-    const dialogRef = this.dialog.open(PlayerComponent, { data: album });
+    const dialogRef = this.dialog.open(AlbumComponent, { data: album });
   }
 
   dataReady: boolean = false;
