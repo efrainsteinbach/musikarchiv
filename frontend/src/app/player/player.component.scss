@@ -1,101 +1,122 @@
-.cover-art {
-    max-width: 300px;
-    max-height: 300px;
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
 }
 
-.track {
-    cursor: pointer;
+.title-artist {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 500px;
 
-    &.current-song {
-        color: grey;
-    }
-}
-
-.clickable {
-    cursor: pointer;
-
-    &:hover {
-        color: lightgrey;
+    .title {
+        font-weight: bold;
     }
 }
 
 .container {
     display: flex;
     flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+
+    .track {
+        cursor: pointer;
+
+        &.current-song {
+            color: grey;
+        }
+    }
+
+    .clickable {
+        cursor: pointer;
+
+        &:hover {
+            color: lightgrey;
+        }
+    }
+
+    .player-time-slider {
+        overflow: hidden;
+
+        .time-numbers {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    .player-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        user-select: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+
+        .pauseplay {
+            font-size: 5em;
+        }
+
+        .previous-next-song {
+            font-size: 2em;
+        }
+
+        .mode-enabled {
+            color: rgb(68, 118, 255);
+
+            &:hover {
+                color: rgb(110, 149, 255);
+            }
+        }
+
+        .shuffle-mode {
+            margin-right: 20px;
+            font-size: 1.6em;
+        }
+
+        .repeat-mode {
+            margin-left: 20px;
+            font-size: 1.6em;
+        }
+    }
 }
 
 
 ::ng-deep {
     .player-time-slider .ngx-slider {
+        margin-top: 15px;
+
         .ngx-slider-bar {
-            background: #ccc;
-            height: 8px;     
+            background: #bbb;
+            height: 8px;
             border-radius: 0px;
             cursor: pointer;
         }
+
         .ngx-slider-selection {
-            background: #eee;
+            background: #ccc;
             visibility: visible;
             box-sizing: border-box;
             border-radius: 0px;
             cursor: pointer;
         }
+
         .ngx-slider-pointer {
             width: 8px;
             height: 8px;
             border-radius: 0px;
             top: auto;
-            background-color: #eee;
+            background-color: #ccc;
         }
+
         .ngx-slider-pointer:after {
             display: none;
         }
-    }
-}
-
-.player-time-slider {
-    overflow: hidden;
-
-    .time-numbers {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-}
-
-.player-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    user-select: none;
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-
-    .pauseplay {
-        font-size: 5em;
-    }
-
-    .previous-next-song {
-        font-size: 2em;
-    }
-
-    .mode-enabled {
-        color: rgb(68, 118, 255);
-
-        &:hover {
-            color: rgb(110, 149, 255);
-        }
-    }
-
-    .shuffle-mode {
-        margin-right: 20px;
-        font-size: 1.6em;
-    }
-    .repeat-mode {
-        margin-left: 20px;
-        font-size: 1.6em;
     }
 }

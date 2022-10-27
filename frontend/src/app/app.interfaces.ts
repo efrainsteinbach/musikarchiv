@@ -12,3 +12,9 @@ export interface Track {
   artist: string;
   url: string;
 }
+
+export enum RepeatMode {
+  DontRepeat = 0,
+  RepeatAll,
+  RepeatOne
+}

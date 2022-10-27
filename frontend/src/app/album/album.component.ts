@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Album } from '../app.interfaces';
+import { Component, Input } from '@angular/core';
+import { Album, Track } from '../app.interfaces';
+import { AudioplayerService } from '../audioplayer.service';
 
 @Component({
   selector: 'app-album',
@@ -9,16 +9,33 @@ import { Album } from '../app.interfaces';
 })
 export class AlbumComponent {
 
-  album: Album;
-  indexOfSongPlaying: number = 0;
+  @Input()
+  album: Album | undefined;
+  indexOfSongPlaying: number | undefined;
 
-  isPlaying: boolean = false;
+  constructor(private audioplayer: AudioplayerService) {
+    this.highlightSongPlayingIfAny(this.audioplayer.currentSong);
+    this.audioplayer.currentSongChanged.subscribe(track => this.highlightSongPlayingIfAny(track));
+  }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Album) {
-    this.album = data;
+  private highlightSongPlayingIfAny(track: Track | undefined) {
+    if (track) {
+      this.indexOfSongPlaying = this.album?.tracks.findIndex((t) => t.url === track.url);
+    }
+    else
+      this.indexOfSongPlaying = undefined;
   }
 
   public playSong(indexInAlbum: number) {
-    console.log("todo.");
+    this.loadAlbumToPlayer();
+    this.audioplayer.skipToSongInQueue(indexInAlbum);
+    this.audioplayer.play();
+  }
+
+  loadAlbumToPlayer() {
+    this.audioplayer.stopAndClear();
+    if (this.album) {
+      this.album!.tracks.forEach(track => this.audioplayer.addTrackToPlaylist(track));
+    }
   }
 }

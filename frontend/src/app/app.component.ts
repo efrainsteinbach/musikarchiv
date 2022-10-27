@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Album } from './app.interfaces';
-import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
-import { AlbumComponent } from './album/album.component';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +8,11 @@ import { AlbumComponent } from './album/album.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public dialog: MatDialog, private http: HttpClient) { }
-
-  showAlbum(album: Album) {
-    const dialogRef = this.dialog.open(AlbumComponent, { data: album });
-  }
+  constructor(private http: HttpClient) { }
 
   dataReady: boolean = false;
   albums: Album[] = [];
+  albumDetail: Album | undefined;
 
   ngAfterViewInit(): void {
     this.http.get<Album[]>("http://localhost:3000/index.json")
@@ -25,6 +20,14 @@ export class AppComponent {
         this.albums = data;
         this.dataReady = true;
       });
+  }
+
+  showAlbum(album: Album) {
+    this.albumDetail = album;
+  }
+
+  closeAlbum() {
+    this.albumDetail = undefined;
   }
 }
 

@@ -1,23 +1,37 @@
 .content {
   padding: 16px;
-}
+  padding-bottom: 170px;
 
-.gallery {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
+  .gallery {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
 
-  .album {
-    margin: 15px;
-    max-width: 400px;
-    max-width: 400px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    .album {
+      margin: 15px;
+      max-width: 400px;
+      max-width: 400px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-    img {
-      display: block;
-      max-width: 100%;
-      max-height: 100%;
+      img {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+      }
     }
   }
+}
+
+.player-footer {
+  margin: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fafafa;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

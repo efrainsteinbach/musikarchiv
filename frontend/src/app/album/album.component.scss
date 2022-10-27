@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
 
+    .current-song {
+        color: rgb(68, 118, 255);
+    }
+
     .header {
         display: flex;
         flex-direction: column;
@@ -10,20 +14,13 @@
         .cover-art {
             max-width: 300px;
             max-height: 300px;
+
+            box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
         }
 
         .play-album-button {
             font-size: 4em;
         }
-    }
-}
-
-
-.track {
-    cursor: pointer;
-
-    &.current-song {
-        color: grey;
     }
 }
 
