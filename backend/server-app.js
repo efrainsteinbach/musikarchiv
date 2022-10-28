@@ -26,10 +26,11 @@ async function extractAlbums(tracks) {
             title: representative?.album ? representative?.album : albumFolder,
             artist: representative?.artist,
             year: representative?.year,
-            art: hostname + "/music/" + albumFolder + "/cover.png",
+            artwork: hostname + "/music/" + albumFolder + "/cover.png",
             tracks: albumTracks.map(t => ({
                 title: t.title,
                 artist: t.artist,
+                artwork: hostname + "/music/" + albumFolder + "/cover.png",
                 url: hostname + "/" + t.url,
             })),
         };

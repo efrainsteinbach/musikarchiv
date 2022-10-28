@@ -5,7 +5,7 @@
 <div class="content">
   <div *ngIf="dataReady && !albumDetail" class="gallery">
     <div class="album" *ngFor="let a of albums" (click)="showAlbum(a)">
-      <img mat-card-image src={{a.art}}>
+      <img mat-card-image src={{a.artwork}}>
     </div>
   </div>
 

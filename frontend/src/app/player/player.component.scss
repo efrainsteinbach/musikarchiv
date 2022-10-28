@@ -6,10 +6,17 @@
     padding-top: 15px;
 }
 
+.artwork {
+    position: absolute;
+    left: 15px;
+    height: 80%;
+    width: auto;
+}
+
 .title-artist {
     overflow: hidden;
     white-space: nowrap;
-    width: 500px;
+    min-width: 500px;
 
     .title {
         font-weight: bold;

@@ -16,7 +16,7 @@ export class MediaSessionConnectorService {
       navigator.mediaSession.setActionHandler('nexttrack', () => { this.audioplayer.nextSong(); });
 
       this.audioplayer.isPlayingChanged.subscribe((isPlaying) => {
-        if (navigator?.mediaSession) {
+        if ('mediaSession' in navigator) {
           navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
         }
       });
@@ -26,20 +26,12 @@ export class MediaSessionConnectorService {
   }
 
   private updateMetadata(track: Track | undefined) {
-    if (track) {
+    if (track && 'mediaSession' in navigator) {
       console.log('setting metadata', track);
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.title,
         artist: track.artist,
-        // album: track?.album ?? 'unknown-album',
-        // artwork: [
-        //   { src: 'https://dummyimage.com/96x96',   sizes: '96x96',   type: 'image/png' },
-        //   { src: 'https://dummyimage.com/128x128', sizes: '128x128', type: 'image/png' },
-        //   { src: 'https://dummyimage.com/192x192', sizes: '192x192', type: 'image/png' },
-        //   { src: 'https://dummyimage.com/256x256', sizes: '256x256', type: 'image/png' },
-        //   { src: 'https://dummyimage.com/384x384', sizes: '384x384', type: 'image/png' },
-        //   { src: 'https://dummyimage.com/512x512', sizes: '512x512', type: 'image/png' },
-        // ]
+        artwork: track.artwork ? [{ src: track.artwork, type: 'image/png' }] : [],
       });
     } else {
       navigator.mediaSession.metadata = null;
