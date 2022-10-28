@@ -27,15 +27,18 @@ export class AlbumComponent {
   }
 
   public playSong(indexInAlbum: number) {
+    const shuffleWasEnabled = this.audioplayer.shuffleEnabled; 
+    this.audioplayer.shuffleEnabled = false; // Disable shuffling for playlist loading, as we will want to skip ahead to a specific song.
+
     this.loadAlbumToPlayer();
     this.audioplayer.skipToSongInQueue(indexInAlbum);
+
+    this.audioplayer.shuffleEnabled = shuffleWasEnabled;
     this.audioplayer.play();
   }
 
   loadAlbumToPlayer() {
     this.audioplayer.stopAndClear();
-    if (this.album) {
-      this.album!.tracks.forEach(track => this.audioplayer.addTrackToPlaylist(track));
-    }
+    this.audioplayer.addTracksToPlaylist(this.album?.tracks ?? []);
   }
 }

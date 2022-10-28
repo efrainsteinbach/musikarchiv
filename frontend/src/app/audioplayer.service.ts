@@ -8,6 +8,7 @@ export class AudioplayerService {
 
   private playlist: TrackPlayer[] = [];
   private tracksPlayed: TrackPlayer[] = [];
+  private fullPlaylist: TrackPlayer[] = []; // playlist + tracks played, keeping the original order to shuffle/unshuffle
 
   private _shuffleEnabled: boolean = false;
   public get shuffleEnabled(): boolean {
@@ -15,6 +16,33 @@ export class AudioplayerService {
   }
   public set shuffleEnabled(isEnabled: boolean) {
     this._shuffleEnabled = isEnabled;
+
+    if (this.playlist.length === 0) {
+      return;
+    }
+    const current = this.playlist[0];
+    if (isEnabled) {
+      this.fullPlaylist = [...this.tracksPlayed, ...this.playlist];
+      this.shufflePlaylistExceptCurrent();
+    } else {
+      const idx = this.fullPlaylist.findIndex(s => s === current);
+      if (idx >= 0) {
+        this.playlist = this.fullPlaylist.slice(idx);
+        this.tracksPlayed = this.fullPlaylist.slice(0, idx);
+      }
+    }
+  }
+  
+  private shufflePlaylistExceptCurrent() {
+    const current = this.playlist[0];
+    if (current) {
+      this.playlist.shift(); // remove current song
+      for (let i = this.playlist.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.playlist[i], this.playlist[j]] = [this.playlist[j], this.playlist[i]];
+      }
+      this.playlist.unshift(current); // add it back
+    }
   }
 
   private _repeatMode: RepeatMode = RepeatMode.DontRepeat;
@@ -55,7 +83,24 @@ export class AudioplayerService {
   playbackStopped = new EventEmitter<void>();
 
   addTrackToPlaylist(track: Track) {
-    this.playlist.push(new TrackPlayer(track, () => this.onSongEnded(), (e) => this.onOneSecondPlayed(e)));
+    const newSong = new TrackPlayer(track, () => this.onSongEnded(), (e) => this.onOneSecondPlayed(e));
+    this.fullPlaylist.push(newSong);
+    this.playlist.push(newSong);
+    if (this.shuffleEnabled) {
+      this.shufflePlaylistExceptCurrent();
+    }
+    this.currentSongChanged.next(this.playlist[0]?.track);
+  }
+
+  addTracksToPlaylist(tracks: Track[]) {
+    tracks.forEach(track => {
+      const newSong = new TrackPlayer(track, () => this.onSongEnded(), (e) => this.onOneSecondPlayed(e));
+      this.fullPlaylist.push(newSong);
+      this.playlist.push(newSong);
+    });
+    if (this.shuffleEnabled) {
+      this.shufflePlaylistExceptCurrent();
+    }
     this.currentSongChanged.next(this.playlist[0]?.track);
   }
 
@@ -91,6 +136,7 @@ export class AudioplayerService {
 
   nextSong() {
     console.log("next song requested");
+
     const current = this.playlist[0];
     if (current) {
       current.stopAndRewind();
@@ -112,7 +158,7 @@ export class AudioplayerService {
   }
 
   private onSongEnded() {
-    console.log("song ended", this.isPlaying, this.playlist, this.tracksPlayed);
+    console.log("song ended");
     const current = this.playlist[0];
 
     if (this.repeatMode === RepeatMode.RepeatOne) {
@@ -187,6 +233,7 @@ export class AudioplayerService {
     this.tracksPlayed.forEach(x => x.stopAndRewind());
     this.playlist = [];
     this.tracksPlayed = [];
+    this.fullPlaylist = [];
     this.isPlaying = false;
   }
 }
