@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Album } from './app.interfaces';
 import { HttpClient } from '@angular/common/http';
+import { MediaSessionConnectorService } from './mediasession-connector.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private mediaSessionConnector: MediaSessionConnectorService) { }
 
   dataReady: boolean = false;
   albums: Album[] = [];
