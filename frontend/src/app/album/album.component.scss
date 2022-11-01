@@ -2,10 +2,6 @@
     display: flex;
     flex-direction: column;
 
-    .current-song {
-        color: rgb(68, 118, 255);
-    }
-
     .header {
         display: flex;
         flex-direction: column;
@@ -20,14 +16,23 @@
 
         .play-album-button {
             font-size: 4em;
+            cursor: pointer;
+            &:hover {
+                color: lightgrey;
+            }
+        }
+    }
+
+    .current-song {
+        background-color: #c5ceffd2
+    }
+    .mat-row:hover .mat-cell {
+        background-color: #5a68b4;
+        color: white;
+
+        &:active {
+            transform: translate(2px);
         }
     }
 }
 
-.clickable {
-    cursor: pointer;
-
-    &:hover {
-        color: lightgrey;
-    }
-}

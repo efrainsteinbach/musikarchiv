@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { Album, Track } from '../app.interfaces';
 import { AudioplayerService } from '../audioplayer.service';
 
@@ -12,10 +12,23 @@ export class AlbumComponent {
   @Input()
   album: Album | undefined;
   indexOfSongPlaying: number | undefined;
+  displayColumns: string[] = ["no", "name"];
+  screenWidth: number = window?.innerWidth;
 
   constructor(private audioplayer: AudioplayerService) {
     this.highlightSongPlayingIfAny(this.audioplayer.currentSong);
     this.audioplayer.currentSongChanged.subscribe(track => this.highlightSongPlayingIfAny(track));
+    this.onWindowResize(); // initialise display columns
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth < 600) {
+      this.displayColumns = ["name"];
+    } else {
+      this.displayColumns = ["no", "name"]
+    }
   }
 
   private highlightSongPlayingIfAny(track: Track | undefined) {

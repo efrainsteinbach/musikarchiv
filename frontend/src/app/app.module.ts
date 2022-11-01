@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LayoutModule } from '@angular/cdk/layout';
 import { PlayerComponent } from './player/player.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
@@ -33,6 +34,7 @@ import { AlbumComponent } from './album/album.component';
     MatToolbarModule,
     MatButtonModule,
     MatDialogModule,
+    MatTableModule,
     NgxSliderModule,
     FlexLayoutModule,
     MatProgressSpinnerModule,

@@ -7,13 +7,26 @@
     </div>
     <p>{{album.title}} <span *ngIf="album.year">({{album.year}})</span></p>
     <p *ngIf="album.artist">{{album.artist}}</p>
-    <div *ngFor="let track of album.tracks; index as i">
-        <div class="track clickable" 
+
+    <table mat-table [dataSource]="album.tracks" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef> # </th>
+            <td mat-cell *matCellDef="let track; let i = index;"> {{i + 1}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let track"> {{track.title}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row 
             (click)="playSong(i)" 
-            [ngClass]="{'current-song' : indexOfSongPlaying === i}">
-            {{i+1}} {{track.title}}
-        </div>
-    </div>
+            [class.current-song]="indexOfSongPlaying === i"
+            *matRowDef="let row; columns: displayColumns; let i = index"></tr>
+    </table>
+
 </div>
 
 <div class="error-box" *ngIf="!album">No album was selected.</div>
