@@ -1,4 +1,5 @@
 <mat-toolbar color="primary">
+  <button mat-button (click)="closeAlbum()" *ngIf="albumDetail" class="back-button"><span class="material-icons">arrow_back</span></button>
   <span>Musikarchiv</span>
 </mat-toolbar>
 
@@ -10,10 +11,7 @@
   </div>
 
   <div *ngIf="albumDetail">
-    <button mat-button (click)="closeAlbum()"><span class="material-icons">arrow_back</span></button>
     <app-album [album]="albumDetail"></app-album>
-    <button mat-button (click)="closeAlbum()" style="margin-top: 15px"><span
-        class="material-icons">arrow_back</span></button>
   </div>
 
   <div *ngIf="!dataReady">
