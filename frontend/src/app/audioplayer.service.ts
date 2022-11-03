@@ -83,7 +83,7 @@ export class AudioplayerService {
   playbackStopped = new EventEmitter<void>();
 
   addTrackToPlaylist(track: Track) {
-    const newSong = new TrackPlayer(track, () => this.onSongEnded(), (e) => this.onOneSecondPlayed(e));
+    const newSong = new TrackPlayer(track, () => this.onSongEnded(), (e) => { if (this.playlist[0]?.track === track) { this.onOneSecondPlayed(e) }});
     this.fullPlaylist.push(newSong);
     this.playlist.push(newSong);
     if (this.shuffleEnabled) {
@@ -94,7 +94,7 @@ export class AudioplayerService {
 
   addTracksToPlaylist(tracks: Track[]) {
     tracks.forEach(track => {
-      const newSong = new TrackPlayer(track, () => this.onSongEnded(), (e) => this.onOneSecondPlayed(e));
+      const newSong = new TrackPlayer(track, () => this.onSongEnded(), (e) => { if (this.playlist[0]?.track === track) { this.onOneSecondPlayed(e) }});
       this.fullPlaylist.push(newSong);
       this.playlist.push(newSong);
     });
@@ -217,6 +217,9 @@ export class AudioplayerService {
 
   private onOneSecondPlayed(currentTime: number) {
     this.currentTime.next(currentTime);
+    if ((this.currentSongDuration ?? 0) - currentTime <  10 && this.playlist.length > 1 && this.playlist[1]) {
+      this.playlist[1].assertLoaded();
+    }
   }
 
   seek(seconds: number) {
@@ -246,6 +249,7 @@ class TrackPlayer {
   constructor(public track: Track, onSongEnded: () => void, onOnSecondsElapsed: (seconds: number) => void) {
     this.audio = new Audio();
     this.audio.src = track.url;
+    this.audio.preload = 'none';
 
     this.audio.addEventListener('ended', () => { this.isPlaying = false; onSongEnded(); });
     this.audio.addEventListener('timeupdate', () => onOnSecondsElapsed(this.audio.currentTime));
@@ -269,7 +273,8 @@ class TrackPlayer {
 
   assertLoaded() {
     if (!this.isLoaded) {
-      this.audio.load();
+      this.audio.load(); 
+      console.log("loading new song: " + this.audio.src);
       this.isLoaded = true;
     }
   }
@@ -283,7 +288,6 @@ class TrackPlayer {
   }
 
   stopAndRewind() {
-    this.assertLoaded();
     this.audio.pause();
     this.audio.currentTime = 0;
     this.isPlaying = false;
