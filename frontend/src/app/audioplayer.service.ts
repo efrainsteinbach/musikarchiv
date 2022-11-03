@@ -240,12 +240,12 @@ export class AudioplayerService {
 
 class TrackPlayer {
   private audio: HTMLAudioElement;
+  private isLoaded: boolean = false;
   private isPlaying: boolean = false;
 
   constructor(public track: Track, onSongEnded: () => void, onOnSecondsElapsed: (seconds: number) => void) {
     this.audio = new Audio();
     this.audio.src = track.url;
-    this.audio.load();
 
     this.audio.addEventListener('ended', () => { this.isPlaying = false; onSongEnded(); });
     this.audio.addEventListener('timeupdate', () => onOnSecondsElapsed(this.audio.currentTime));
@@ -261,19 +261,29 @@ class TrackPlayer {
 
   play() {
     if (!this.isPlaying && this.audio.paused) {
+      this.assertLoaded();
       this.audio.play();
       this.isPlaying = true;
     }
   }
 
+  assertLoaded() {
+    if (!this.isLoaded) {
+      this.audio.load();
+      this.isLoaded = true;
+    }
+  }
+
   pause() {
     if (this.isPlaying || !this.audio.paused) {
+      this.assertLoaded();
       this.audio.pause();
       this.isPlaying = false;
     }
   }
 
   stopAndRewind() {
+    this.assertLoaded();
     this.audio.pause();
     this.audio.currentTime = 0;
     this.isPlaying = false;
@@ -284,6 +294,7 @@ class TrackPlayer {
   }
 
   skipToSecond(seconds: number) {
+    this.assertLoaded();
     if (seconds > this.audio.duration) {
       seconds = this.audio.duration;
     }
