@@ -29,7 +29,8 @@
     .mat-row:hover .mat-cell {
         background-color: #5a68b4;
         color: white;
-
+        cursor: pointer;
+        
         &:active {
             transform: translate(2px);
         }
