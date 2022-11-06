@@ -27,7 +27,6 @@ export class MediaSessionConnectorService {
 
   private updateMetadata(track: Track | undefined) {
     if (track && 'mediaSession' in navigator) {
-      console.log('setting metadata', track);
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.title,
         artist: track.artist,
