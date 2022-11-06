@@ -3,7 +3,7 @@ import { Album } from './app.interfaces';
 import { HttpClient } from '@angular/common/http';
 import { MediaSessionConnectorService } from './mediasession-connector.service';
 import { environment } from './../environments/environment';
-import { state } from '@angular/animations';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,11 @@ import { state } from '@angular/animations';
 export class AppComponent {
   constructor(
     private http: HttpClient,
-    private mediaSessionConnector: MediaSessionConnectorService) {
+    private mediaSessionConnector: MediaSessionConnectorService,
+    private titleService: Title) {
+
+    this.pageTitle = environment.pageTitle;
+    this.titleService.setTitle(environment.pageTitle);
 
     window.onpopstate = (event) => {
       if (this.albumDetail) {
@@ -30,6 +34,7 @@ export class AppComponent {
     }
   }
 
+  pageTitle = "";
   dataReady: boolean = false;
   albums: Album[] = [];
   albumDetail: Album | undefined;
