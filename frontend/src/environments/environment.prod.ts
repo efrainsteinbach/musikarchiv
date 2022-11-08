@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   pageTitle: "ACZ Musikarchiv",
-  musicIndexLocation: "index.json",
+  musicIndexLocation: "catalogue/index.json",
 };

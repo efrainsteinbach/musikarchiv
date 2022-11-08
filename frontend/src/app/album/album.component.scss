@@ -1,20 +1,28 @@
 .container {
     display: flex;
-    flex-direction: column;
 
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @media all and (min-width: 1250px) {
+        flex-direction: row;
+        align-items: flex-start;
+    }
 
     .header {
         display: flex;
         flex-direction: column;
         align-items: center;
 
+        @media all and (min-width: 1250px) {
+            padding-top: 100px;
+        }
+
         .cover-art {
             max-width: 380px;
             max-height: 380px;
-
+            width: 95%;
             box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
         }
 
@@ -25,6 +33,17 @@
             &:hover {
                 color: lightgrey;
             }
+        }
+    }
+
+    .tracklist {
+        width: 100%;
+        max-width: 800px;
+        padding-left: 50px;
+        padding-right: 50px;
+
+        table {
+            width: 100%;
         }
     }
 
