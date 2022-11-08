@@ -1,19 +1,28 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Album } from './app.interfaces';
 import { HttpClient } from '@angular/common/http';
 import { MediaSessionConnectorService } from './mediasession-connector.service';
 import { environment } from './../environments/environment';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+
+  pageTitle = "";
+  dataReady: boolean = false;
+  albums: Album[] = [];
+  albumDetail: Album | undefined;
+  loggedIn = false;
+
   constructor(
     private http: HttpClient,
-    private mediaSessionConnector: MediaSessionConnectorService,
+    private _: MediaSessionConnectorService, // This is only injected to create a the singleton instance
+    private authService: AuthService,
     private titleService: Title) {
 
     this.pageTitle = environment.pageTitle;
@@ -32,20 +41,16 @@ export class AppComponent {
         }
       };
     }
+
+    if (authService.authToken) {
+      this.loggedIn = true;
+    }
   }
 
-  pageTitle = "";
-  dataReady: boolean = false;
-  albums: Album[] = [];
-  albumDetail: Album | undefined;
-
-  ngAfterViewInit(): void {
-    this.http.get<Album[]>(environment.musicIndexLocation)
-      .subscribe(data => {
-        this.albums = data;
-        this.albums.sort((a, b) => b.year - a.year);
-        this.dataReady = true;
-      });
+  ngAfterViewInit() {
+    if (this.loggedIn) {
+      this.onLoginComplete();
+    }
   }
 
   showAlbum(album: Album) {
@@ -67,6 +72,14 @@ export class AppComponent {
     this.albumDetail = undefined;
     window.scrollTo(0, 0);
   }
+
+  onLoginComplete() {
+    this.loggedIn = true;
+    this.http.get<Album[]>(environment.musicIndexLocation, { headers: { Authorization: "Basic " + this.authService.authToken } })
+      .subscribe(data => {
+        this.albums = data;
+        this.albums.sort((a, b) => b.year - a.year);
+        this.dataReady = true;
+      });
+  }
 }
-
-

@@ -1,0 +1,20 @@
+<form (submit)="submit()" class="login-form-container">
+
+    <h3 class="login-message">Bitte melde dich an</h3>
+
+    <p *ngIf="invalidPassword">Benutzername oder Passwort ungültig!</p>
+    <p *ngIf="technicalError">Technische Störung, Login nicht möglich.</p>
+
+    <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Benutzername</mat-label>
+        <input matInput class="username" [(ngModel)]="username" name="username">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Passwort</mat-label>
+        <input matInput type="password" [(ngModel)]="password" name="password">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Anmelden</button>
+
+</form>

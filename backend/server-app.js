@@ -2,10 +2,11 @@ import glob from 'glob';
 import { parseFile } from 'music-metadata';
 import express from 'express';
 import cors from 'cors';
-import { writeFile as fsWriteFile, statSync } from 'fs';
+import basicAuth from 'express-basic-auth';
+import { writeFile as fsWriteFile } from 'fs';
 
 const musicFolder = "C:/code/acz/mp3"; // absolute or relative path, without trailing slash
-const hostname = 'http://localhost:3000'; // 'music' in PROD
+const hostname = "http://localhost:3000"; // 'music' in PROD
 const startServer = true;
 const writeFile = true;
 const resultFile = "index.json";
@@ -56,7 +57,6 @@ async function extractAlbums(tracks) {
     return albums;
 }
 
-
 function crawlMusicFolder() {
     console.log("Scanning music folder...");
 
@@ -91,11 +91,21 @@ function startExpress(trackListing) {
     const tracks = trackListing;
 
     app.use(cors());
-    app.get('/' + resultFile, (req, res) => {
+
+    app.use('/', express.static(musicFolder));
+
+    const authConfig = basicAuth({
+        challenge: true,
+        users: {
+            'a': 'a',
+            'acz': 'aczmwz',
+            'admin': 'supersecret'
+        }
+    });
+    app.get('/' + resultFile, authConfig, (req, res) => {
         res.json(tracks)
     })
 
-    app.use('/', express.static(musicFolder));
     app.listen(port, () => {
         console.log(`Serving album-json on port ${port}`);
     })
