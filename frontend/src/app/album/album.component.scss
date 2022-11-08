@@ -2,14 +2,18 @@
     display: flex;
     flex-direction: column;
 
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+
     .header {
         display: flex;
         flex-direction: column;
         align-items: center;
 
         .cover-art {
-            max-width: 300px;
-            max-height: 300px;
+            max-width: 380px;
+            max-height: 380px;
 
             box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
         }
@@ -17,6 +21,7 @@
         .play-album-button {
             font-size: 4em;
             cursor: pointer;
+
             &:hover {
                 color: lightgrey;
             }
@@ -26,14 +31,14 @@
     .current-song {
         background-color: #c5ceffd2
     }
+
     .mat-row:hover .mat-cell {
         background-color: #5a68b4;
         color: white;
         cursor: pointer;
-        
+
         &:active {
             transform: translate(2px);
         }
     }
 }
-
