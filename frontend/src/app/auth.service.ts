@@ -30,7 +30,7 @@ export class AuthService {
 
   tryLogIn(username: string, password: string): Observable<LogInResult> {
     const basicAuthToken = btoa(username + ":" + password);
-    const observable = this.http.get<Album[]>(environment.musicIndexLocation, { headers: { Authorization: "Basic " + basicAuthToken } })
+    const observable = this.http.get<Album[]>(environment.musicIndexLocation, { headers: { Authorization: "Basic " + basicAuthToken, 'X-Requested-With': 'XMLHttpRequest' } })
       .pipe(
         tap(_ => {
           this._authToken = basicAuthToken;
