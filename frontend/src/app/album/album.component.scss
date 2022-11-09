@@ -8,16 +8,21 @@
     @media all and (min-width: 1250px) {
         flex-direction: row;
         align-items: flex-start;
+
+        .header {
+            padding-top: 100px;
+        }
+
+        .tracklist {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
     }
 
     .header {
         display: flex;
         flex-direction: column;
         align-items: center;
-
-        @media all and (min-width: 1250px) {
-            padding-top: 100px;
-        }
 
         .cover-art {
             max-width: 380px;
@@ -39,8 +44,6 @@
     .tracklist {
         width: 100%;
         max-width: 800px;
-        padding-left: 50px;
-        padding-right: 50px;
 
         table {
             width: 100%;
