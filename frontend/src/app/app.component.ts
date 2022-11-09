@@ -17,7 +17,7 @@ export class AppComponent implements AfterViewInit {
   dataReady: boolean = false;
   albums: Album[] = [];
   albumDetail: Album | undefined;
-  loggedIn = false;
+  loggedIn = !(environment.authEnabled);
 
   constructor(
     private http: HttpClient,

@@ -10,6 +10,7 @@ const hostname = "http://localhost:3000"; // 'music' in PROD
 const startServer = true;
 const writeFile = true;
 const resultFile = "index.json";
+const authEnabled = true;
 
 async function extractMetadata(pathToFile) {
     console.log(pathToFile);
@@ -94,17 +95,22 @@ function startExpress(trackListing) {
 
     app.use('/', express.static(musicFolder));
 
-    const authConfig = basicAuth({
-        challenge: true,
-        users: {
-            'a': 'a',
-            'acz': 'aczmwz',
-            'admin': 'supersecret'
-        }
-    });
-    app.get('/' + resultFile, authConfig, (req, res) => {
-        res.json(tracks)
-    })
+    if (authEnabled) {
+        const authConfig = basicAuth({
+            challenge: true,
+            users: {
+                'a': 'a',
+                'admin': 'supersecret'
+            }
+        });
+        app.get('/' + resultFile, authConfig, (req, res) => {
+            res.json(tracks)
+        })
+    } else {
+        app.get('/' + resultFile, (req, res) => {
+            res.json(tracks)
+        })
+    }
 
     app.listen(port, () => {
         console.log(`Serving album-json on port ${port}`);
