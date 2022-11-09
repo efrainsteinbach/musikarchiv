@@ -1,11 +1,11 @@
 {
   "name": "musikarchiv-backend",
   "version": "1.0.0",
-  "description": "A service watching the filesystem for audio files, exposing an endpoint that returns them as JSON.",
-  "main": "server-app.js",
+  "description": "A service crawling the filesystem for audio files, and saving or serving this data as JSON.",
+  "main": "catalogist.js",
   "type": "module",
   "scripts": {
-    "start": "node server-app.js"
+    "start": "node catalogist.js"
   },
   "author": "efrainsteinbach",
   "license": "MIT",

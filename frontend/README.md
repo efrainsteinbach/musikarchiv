@@ -1,5 +1,7 @@
 # Musikarchiv
 
+Angular frontend audio gallery and player, which serves static MP3s as listed by a JSON file fetched at startup.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
 
 ## Development server
