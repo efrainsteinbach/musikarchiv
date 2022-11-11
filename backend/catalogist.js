@@ -33,7 +33,7 @@ function findCover(folder) {
         return "/cover." + covers[0].split('.').pop();
     }
     else
-        throw new Error("No album artwork found in folder " + folder);
+        throw new Error("No album artwork (cover.png/jpg/gif) found in folder " + folder);
 }
 
 async function extractAlbums(tracks) {
