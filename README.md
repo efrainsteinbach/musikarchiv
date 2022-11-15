@@ -5,8 +5,9 @@ The goal of this application is to enable you to have your own music libarary in
 
 Here is a screenshot of it in action on a private collection:
 
-<img src="usage-example.jpg" alt="live example screenshot" style="display:block; width:90%;margin:auto;padding-bottom:50px"/>
-
+<p style="text-align:center; padding-bottom:30px">
+    <img src="usage-example.jpg" alt="live example screenshot" style="width:90%"/>
+</p>
 
 # Overview
 
