@@ -1,7 +1,12 @@
 # Musikarchiv
 
-This is a small Angular web application which can show and play collection of static music albums (mp3s). It's designed to work entirely with static assets. 
-The goal of this application is to enable you to have your own music libarary in the web, where you can host your music yourself and control access via your own authentication methods, namely Basic Auth.
+A small Angular web application which can show and play collection of static music albums (mp3s). It's designed to work entirely with static assets. 
+The goal of this application is to enable you to have your own music libarary in the web, where you can host your music yourself and control access via your own authentication methods, namely Basic Auth. 
+
+Here is a screenshot of it in action on a private collection:
+
+<img src="usage-example.jpg" alt="live example screenshot" style="display:block; width:90%;margin:auto;padding-bottom:50px"/>
+
 
 # Overview
 
