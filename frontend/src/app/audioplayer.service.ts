@@ -232,8 +232,8 @@ export class AudioplayerService {
   }
 
   stopAndClear() {
-    this.playlist.forEach(x => x.stopAndRewind());
-    this.tracksPlayed.forEach(x => x.stopAndRewind());
+    this.playlist.forEach(x => x.deconstruct());
+    this.tracksPlayed.forEach(x => x.deconstruct());
     this.playlist = [];
     this.tracksPlayed = [];
     this.fullPlaylist = [];
@@ -245,14 +245,18 @@ class TrackPlayer {
   private audio: HTMLAudioElement;
   private isLoaded: boolean = false;
   private isPlaying: boolean = false;
+  private endedCallback: () => void;
+  private timeupdateCallback: () => void;
 
   constructor(public track: Track, onSongEnded: () => void, onOnSecondsElapsed: (seconds: number) => void) {
     this.audio = new Audio();
     this.audio.src = track.url;
     this.audio.preload = 'none';
 
-    this.audio.addEventListener('ended', () => { this.isPlaying = false; onSongEnded(); });
-    this.audio.addEventListener('timeupdate', () => onOnSecondsElapsed(this.audio.currentTime));
+    this.endedCallback = () => { this.isPlaying = false; onSongEnded(); }
+    this.timeupdateCallback = () => { onOnSecondsElapsed(this.audio.currentTime); }
+    this.audio.addEventListener('ended', this.endedCallback);
+    this.audio.addEventListener('timeupdate', this.timeupdateCallback);
   }
 
   public get currentTime(): number {
@@ -306,5 +310,11 @@ class TrackPlayer {
       seconds = 0;
     }
     this.audio.currentTime = seconds;
+  }
+
+  deconstruct(): void {
+    this.stopAndRewind();
+    this.audio.removeEventListener('ended', this.endedCallback);
+    this.audio.removeEventListener('timeupdate', this.timeupdateCallback)
   }
 }
