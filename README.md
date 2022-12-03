@@ -51,3 +51,11 @@ Unfortuantely, with the current solution it is not possible to keep the entire l
 So the rudimentary solution is to just protect the `index.json` file with Basic Authentication. The frontend app asks for the credentials and tries to access this file to test if the credentials work - and that's it. By not being able to list the mp3s (and by denying directory listing) essentially they're hidden from the public. 
 
 This is a main area where the app can be extended and improved, also with respect to other, more secure authorization methods (e.g. token based).
+
+# Next features / Ideas
+
+- A Song search bar
+- Ribbon on the album covers, showing year which can be shown or hidden
+- Gapless audio between songs (see also: gapless5, copy their approach or replace the native elements in audioplayer.service.ts)
+- Download and keep songs in local storage, so we can use it even when the internet connection is missing (aka PWA)
+- Refine authentication: Use a clean middleware approach, so all hidden assets (images, mp3s) are also fetched with authorization (AJAX/XHttpRequests). 
