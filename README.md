@@ -1,6 +1,6 @@
 # Musikarchiv
 
-A small Angular web application which can show and play collection of static music albums (mp3s). It's designed to work entirely with static assets, so you can run it on any web server like Apache, IIS or Nginx (or any hosting provider). The goal of this application is to enable you to host a private online gallery of your own music on the web, allowing access control using Basic Auth (or potentially other authorization methods).  
+A lightweight Angular (JavaScript) web application which can show and play a static collection of music albums (mp3s). It's designed work using static assets only, **without any server-side dependencies like PHP, Asp.Net or MySql**, so you can run it on any web server like Apache, IIS or Nginx (or a cheap hosting provider). The goal of this application is to easily enable you to host a private online gallery of your own music on the web, allowing access control using Basic Auth (or potentially other authorization methods). The core concept is to build the index of the available music yourself on your machine, not on the server, using a *node.js* script.
 
 Here is a screenshot of it in action on a private collection:
 
@@ -59,3 +59,10 @@ This is a main area where the app can be extended and improved, also with respec
 - Gapless audio between songs (see also: gapless5, copy their approach or replace the native elements in audioplayer.service.ts)
 - Download and keep songs in local storage, so we can use it even when the internet connection is missing (aka PWA)
 - Refine authentication: Use a clean middleware approach, so all hidden assets (images, mp3s) are also fetched with authorization (AJAX/XHttpRequests). 
+
+# Related Projects
+
+Check out these projects which may be more suitable for your needs (but have more server side dependencies):
+- https://github.com/ltGuillaume/MusicFolderPlayer
+- https://github.com/sphildreth/roadie
+- https://github.com/Sonerezh/sonerezh
