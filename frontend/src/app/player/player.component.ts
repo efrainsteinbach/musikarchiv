@@ -5,9 +5,10 @@ import { RepeatMode, Track } from '../app.interfaces';
 import { AudioplayerService } from '../audioplayer.service';
 
 @Component({
-  selector: 'app-player',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.scss']
+    selector: 'app-player',
+    templateUrl: './player.component.html',
+    styleUrls: ['./player.component.scss'],
+    standalone: false
 })
 export class PlayerComponent implements AfterViewInit {
 

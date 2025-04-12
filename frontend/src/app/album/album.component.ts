@@ -3,9 +3,10 @@ import { Album, Track } from '../app.interfaces';
 import { AudioplayerService } from '../audioplayer.service';
 
 @Component({
-  selector: 'app-album',
-  templateUrl: './album.component.html',
-  styleUrls: ['./album.component.scss']
+    selector: 'app-album',
+    templateUrl: './album.component.html',
+    styleUrls: ['./album.component.scss'],
+    standalone: false
 })
 export class AlbumComponent {
 
